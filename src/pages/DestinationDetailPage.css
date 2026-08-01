@@ -1,0 +1,228 @@
+.destination-detail {
+  background: var(--mist);
+  padding-bottom: clamp(4rem, 8vw, 6rem);
+}
+
+.destination-detail__hero {
+  position: relative;
+  min-height: min(58vh, 520px);
+  display: grid;
+  align-items: end;
+  overflow: hidden;
+  background: var(--pine-deep);
+}
+
+.destination-detail__hero > img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.destination-detail__hero-shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(18, 40, 32, 0.35) 0%,
+    rgba(18, 40, 32, 0.2) 40%,
+    rgba(18, 40, 32, 0.82) 100%
+  );
+}
+
+.destination-detail__hero-copy {
+  position: relative;
+  z-index: 1;
+  padding: calc(var(--header-h) + 2rem) 0 2.5rem;
+  color: #fff;
+}
+
+.destination-detail__hero-copy .breadcrumbs,
+.destination-detail__hero-copy .breadcrumbs a,
+.destination-detail__hero-copy .breadcrumbs [aria-current="page"] {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.destination-detail__hero-copy .breadcrumbs a:hover {
+  color: var(--gold);
+}
+
+.destination-detail__hero-copy .breadcrumbs li:not(:last-child)::after {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.destination-detail__tag {
+  display: inline-block;
+  margin-bottom: 0.75rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.destination-detail__hero-copy h1 {
+  font-size: clamp(2.2rem, 5vw, 3.6rem);
+  max-width: 16ch;
+  color: #fff;
+}
+
+.destination-detail__location {
+  margin-top: 0.75rem;
+  font-size: 1.05rem;
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.destination-detail__layout {
+  display: grid;
+  gap: 2.5rem;
+  margin-top: clamp(-1.5rem, -2vw, -0.5rem);
+  position: relative;
+  z-index: 1;
+}
+
+.destination-detail__main {
+  background: var(--paper);
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+  box-shadow: var(--shadow);
+}
+
+.destination-detail__main p {
+  color: var(--ink-soft);
+  font-size: 1.05rem;
+  margin-bottom: 1.1rem;
+}
+
+.destination-detail__highlights {
+  margin: 1.75rem 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.65rem;
+}
+
+.destination-detail__highlights li {
+  position: relative;
+  padding-left: 1.25rem;
+  color: var(--ink);
+  font-weight: 500;
+}
+
+.destination-detail__highlights li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: var(--copper);
+}
+
+.destination-detail__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 2rem;
+  align-items: center;
+}
+
+.destination-detail__primary,
+.destination-detail__secondary,
+.destination-detail__ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.75rem;
+  padding: 0.7rem 1.15rem;
+  border-radius: var(--radius);
+  font-weight: 600;
+  font-size: 0.92rem;
+}
+
+.destination-detail__primary {
+  background: var(--pine);
+  color: var(--paper);
+}
+
+.destination-detail__primary:hover {
+  background: var(--pine-deep);
+}
+
+.destination-detail__secondary {
+  background: var(--gold);
+  color: var(--pine-deep);
+}
+
+.destination-detail__secondary:hover {
+  background: #d4b03a;
+}
+
+.destination-detail__ghost {
+  color: var(--pine);
+  padding-inline: 0.35rem;
+}
+
+.destination-detail__ghost:hover {
+  color: var(--copper);
+}
+
+.destination-detail__gallery {
+  display: grid;
+  gap: 0.75rem;
+  align-content: start;
+}
+
+.destination-detail__gallery-main {
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  background: var(--pine-deep);
+}
+
+.destination-detail__gallery-main img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.destination-detail__thumbs {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+}
+
+.destination-detail__thumbs button {
+  border: 2px solid transparent;
+  padding: 0;
+  overflow: hidden;
+  cursor: pointer;
+  aspect-ratio: 1;
+  background: var(--pine-deep);
+}
+
+.destination-detail__thumbs button.is-active {
+  border-color: var(--gold);
+}
+
+.destination-detail__thumbs img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.85;
+  transition: opacity 0.2s var(--ease-out);
+}
+
+.destination-detail__thumbs button:hover img,
+.destination-detail__thumbs button.is-active img {
+  opacity: 1;
+}
+
+@media (min-width: 960px) {
+  .destination-detail__layout {
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 2rem;
+    align-items: start;
+    margin-top: -3rem;
+  }
+}

@@ -1,0 +1,100 @@
+.contact {
+  padding: clamp(4.5rem, 10vw, 7rem) 0;
+  background:
+    linear-gradient(135deg, #dfe8e2 0%, var(--mist) 45%, #e8ebe4 100%);
+}
+
+.contact__grid {
+  display: grid;
+  gap: 2.5rem;
+}
+
+.contact__offices {
+  display: grid;
+  gap: 1.75rem;
+  margin-top: 2rem;
+}
+
+.contact__offices h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.contact__offices p,
+.contact__offices a {
+  display: block;
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+  margin-top: 0.25rem;
+}
+
+.contact__offices a:hover {
+  color: var(--pine);
+}
+
+.contact__form {
+  background: var(--paper);
+  padding: clamp(1.5rem, 4vw, 2.25rem);
+  display: grid;
+  gap: 1rem;
+  box-shadow: var(--shadow);
+}
+
+.contact__form label {
+  display: grid;
+  gap: 0.4rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.contact__form input,
+.contact__form textarea {
+  border: 1px solid var(--line);
+  background: var(--mist);
+  padding: 0.85rem 0.95rem;
+  color: var(--ink);
+  border-radius: var(--radius);
+  text-transform: none;
+  font-weight: 400;
+  letter-spacing: normal;
+  resize: vertical;
+}
+
+.contact__form input:focus,
+.contact__form textarea:focus {
+  outline: 2px solid var(--pine);
+  outline-offset: 1px;
+}
+
+.contact__submit {
+  width: fit-content;
+  margin-top: 0.35rem;
+  border: 0;
+  cursor: pointer;
+  background: var(--pine);
+  color: var(--paper);
+}
+
+.contact__submit:hover {
+  background: var(--pine-deep);
+}
+
+.contact__note {
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+}
+
+@media (min-width: 900px) {
+  .contact__grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 3.5rem;
+    align-items: start;
+  }
+
+  .contact__offices {
+    grid-template-columns: 1fr 1fr;
+  }
+}
