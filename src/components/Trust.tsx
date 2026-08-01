@@ -1,8 +1,17 @@
 import { FadeIn } from "./FadeIn";
-import { CERTIFICATIONS, PARTNERS } from "../data";
+import { ResponsiveImg } from "./ResponsiveImg";
+import type {
+  ResolvedCertification,
+  ResolvedPartner,
+} from "../lib/resolveMedia";
 import "./Trust.css";
 
-export function Trust() {
+type TrustProps = {
+  certifications: ResolvedCertification[];
+  partners: ResolvedPartner[];
+};
+
+export function Trust({ certifications, partners }: TrustProps) {
   return (
     <section id="confianza" className="trust" aria-labelledby="trust-title">
       <div className="trust__certs">
@@ -19,7 +28,7 @@ export function Trust() {
           </FadeIn>
 
           <ul className="trust__cert-list">
-            {CERTIFICATIONS.map((cert, i) => (
+            {certifications.map((cert, i) => (
               <FadeIn
                 key={cert.name}
                 as="li"
@@ -27,7 +36,7 @@ export function Trust() {
                 delay={(i % 3) as 0 | 1 | 2}
               >
                 <div className="trust__cert-logo">
-                  <img src={cert.logo} alt="" loading="lazy" />
+                  <ResponsiveImg {...cert.logo} loading="lazy" />
                 </div>
                 <div className="trust__cert-copy">
                   <h3>{cert.name}</h3>
@@ -49,14 +58,14 @@ export function Trust() {
           </FadeIn>
 
           <ul className="trust__partner-list">
-            {PARTNERS.map((partner, i) => (
+            {partners.map((partner, i) => (
               <FadeIn
                 key={partner.name}
                 as="li"
                 className="trust__partner"
                 delay={(i % 3) as 0 | 1 | 2}
               >
-                <img src={partner.logo} alt={partner.name} loading="lazy" />
+                <ResponsiveImg {...partner.logo} loading="lazy" />
               </FadeIn>
             ))}
           </ul>

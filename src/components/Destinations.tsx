@@ -1,12 +1,20 @@
 import { FadeIn } from "./FadeIn";
-import { DESTINATIONS, getFeaturedDestination } from "../data";
+import { ResponsiveImg } from "./ResponsiveImg";
+import type { ResolvedDestination } from "../lib/resolveMedia";
 import "./Destinations.css";
 
-export function Destinations() {
-  const featured = getFeaturedDestination();
+type DestinationsProps = {
+  destinations: ResolvedDestination[];
+};
+
+export function Destinations({ destinations }: DestinationsProps) {
+  const featured =
+    destinations.find((d) => d.featured) ?? destinations[0];
+  if (!featured) return null;
+
   const preview = [
     featured,
-    ...DESTINATIONS.filter((d) => d.slug !== featured.slug).slice(0, 4),
+    ...destinations.filter((d) => d.slug !== featured.slug).slice(0, 4),
   ];
 
   return (
@@ -23,38 +31,38 @@ export function Destinations() {
       </div>
 
       <div className="destinations__grid container-wide">
-        {preview.map((dest, i) => (
-          <FadeIn
-            key={dest.slug}
-            as="article"
-            className="destination"
-            delay={(i % 3) as 0 | 1 | 2}
-          >
-            <a href={`/destinos/${dest.slug}`} className="destination__link">
-              <div className="destination__image">
-                <img
-                  src={dest.images[0]}
-                  alt=""
-                  loading="lazy"
-                />
-                {dest.featured && (
-                  <span className="destination__featured-badge">
-                    Parque de Aventura
-                  </span>
-                )}
-              </div>
-              <div className="destination__body">
-                <span className="destination__tag">{dest.tag}</span>
-                <h3>
-                  {dest.featured && dest.featuredTitle
-                    ? dest.featuredTitle
-                    : dest.name}
-                </h3>
-                <p>{dest.blurb}</p>
-              </div>
-            </a>
-          </FadeIn>
-        ))}
+        {preview.map((dest, i) => {
+          const cover = dest.images[0];
+          if (!cover) return null;
+          return (
+            <FadeIn
+              key={dest.slug}
+              as="article"
+              className="destination"
+              delay={(i % 3) as 0 | 1 | 2}
+            >
+              <a href={`/destinos/${dest.slug}`} className="destination__link">
+                <div className="destination__image">
+                  <ResponsiveImg {...cover} loading="lazy" />
+                  {dest.featured && (
+                    <span className="destination__featured-badge">
+                      Parque de Aventura
+                    </span>
+                  )}
+                </div>
+                <div className="destination__body">
+                  <span className="destination__tag">{dest.tag}</span>
+                  <h3>
+                    {dest.featured && dest.featuredTitle
+                      ? dest.featuredTitle
+                      : dest.name}
+                  </h3>
+                  <p>{dest.blurb}</p>
+                </div>
+              </a>
+            </FadeIn>
+          );
+        })}
       </div>
 
       <div className="container destinations__cta-wrap">

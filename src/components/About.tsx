@@ -1,12 +1,17 @@
-import { ABOUT_IMAGE } from "../data";
 import { FadeIn } from "./FadeIn";
+import { ResponsiveImg } from "./ResponsiveImg";
+import type { OptimizedImage } from "../lib/images";
 import "./About.css";
 
-export function About() {
+type AboutProps = {
+  image: OptimizedImage;
+};
+
+export function About({ image }: AboutProps) {
   return (
     <section id="nosotros" className="about">
       <div className="about__media">
-        <img src={ABOUT_IMAGE} alt="" loading="lazy" />
+        <ResponsiveImg {...image} loading="lazy" />
       </div>
       <div className="about__content">
         <FadeIn>

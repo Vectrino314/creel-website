@@ -1,0 +1,27 @@
+---
+import GroveLayout from "../../layouts/GroveLayout.astro";
+import { CopperGrovePage } from "../../components/demos/copper-grove/CopperGrovePage";
+import { absoluteUrl } from "../../lib/seo";
+import {
+  getDefaultOgImage,
+  resolveCopperGroveMedia,
+} from "../../lib/resolveMedia";
+
+const media = await resolveCopperGroveMedia();
+const defaultOg = await getDefaultOgImage();
+const ogUrl = absoluteUrl(defaultOg.src);
+const pathname = "/demo/copper-grove";
+---
+
+<GroveLayout
+  title="Demo · Copper Grove"
+  description="Portada experimental: estética forestal, pills flotantes y microinteracciones para Barrancas del Cobre."
+  pathname={pathname}
+  ogImage={ogUrl}
+  ogImageAlt={defaultOg.alt}
+  ogImageWidth={defaultOg.width}
+  ogImageHeight={defaultOg.height}
+  noIndex
+>
+  <CopperGrovePage client:load media={media} />
+</GroveLayout>

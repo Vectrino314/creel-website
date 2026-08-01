@@ -21,8 +21,11 @@
 .hero__bg {
   position: absolute;
   inset: -4%;
-  background-size: cover;
-  background-position: center;
+  width: 108%;
+  height: 108%;
+  max-width: none;
+  object-fit: cover;
+  object-position: center;
   animation: hero-drift 14s ease-in-out infinite alternate;
 }
 

@@ -1,6 +1,6 @@
 .whatsapp-widget {
   position: fixed;
-  left: 1.15rem;
+  right: 1.15rem;
   bottom: 1.15rem;
   z-index: 90;
 }
@@ -17,7 +17,7 @@
   box-shadow: 0 10px 28px rgba(18, 40, 32, 0.28);
   cursor: pointer;
   transition: transform 0.25s var(--ease-out), box-shadow 0.25s;
-  animation: fab-in 0.7s ease-out 0.8s both;
+  animation: fab-in 0.55s ease-out both;
   text-decoration: none;
   padding: 0;
 }
@@ -47,8 +47,8 @@
     0 5px 5px -3px rgba(0, 0, 0, 0.12),
     0 8px 10px 1px rgba(0, 0, 0, 0.08),
     0 3px 14px 2px rgba(0, 0, 0, 0.06);
-  animation: fab-in 0.7s ease-out 0.8s both;
   font-family: var(--font-body);
+  animation: card-in 0.5s var(--ease-out) both;
 }
 
 .whatsapp-card__close {
@@ -145,7 +145,18 @@
 @keyframes fab-in {
   from {
     opacity: 0;
-    transform: translateY(16px) scale(0.9);
+    transform: translateY(12px) scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes card-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.96);
   }
   to {
     opacity: 1;
@@ -155,7 +166,7 @@
 
 @media (min-width: 800px) {
   .whatsapp-widget {
-    left: 1.5rem;
+    right: 1.5rem;
     bottom: 1.5rem;
   }
 
@@ -171,5 +182,12 @@
 
   .whatsapp-card {
     display: block;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .whatsapp-fab,
+  .whatsapp-card {
+    animation: none;
   }
 }

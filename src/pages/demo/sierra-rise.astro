@@ -1,0 +1,27 @@
+---
+import RiseLayout from "../../layouts/RiseLayout.astro";
+import { SierraRisePage } from "../../components/demos/sierra-rise/SierraRisePage";
+import { absoluteUrl } from "../../lib/seo";
+import {
+  getDefaultOgImage,
+  resolveSierraRiseMedia,
+} from "../../lib/resolveMedia";
+
+const media = await resolveSierraRiseMedia();
+const defaultOg = await getDefaultOgImage();
+const ogUrl = absoluteUrl(defaultOg.src);
+const pathname = "/demo/sierra-rise";
+---
+
+<RiseLayout
+  title="Demo · Sierra Rise"
+  description="Portada experimental: estética glass, galerías con momentum y microinteracciones para Barrancas del Cobre."
+  pathname={pathname}
+  ogImage={ogUrl}
+  ogImageAlt={defaultOg.alt}
+  ogImageWidth={defaultOg.width}
+  ogImageHeight={defaultOg.height}
+  noIndex
+>
+  <SierraRisePage client:load media={media} />
+</RiseLayout>

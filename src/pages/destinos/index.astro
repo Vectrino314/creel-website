@@ -1,7 +1,8 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { DestinationsPage } from "../../components/pages/DestinationsPage";
-import { breadcrumbJsonLd } from "../../lib/seo";
+import { absoluteUrl, breadcrumbJsonLd } from "../../lib/seo";
+import { resolveAllDestinations } from "../../lib/resolveMedia";
 
 const title = "Destinos en Barrancas del Cobre y Chihuahua";
 const description =
@@ -10,13 +11,19 @@ const breadcrumbs = breadcrumbJsonLd([
   { label: "Inicio", path: "/" },
   { label: "Destinos", path: "/destinos" },
 ]);
+const destinations = await resolveAllDestinations();
+const cover = destinations[0]?.images[0];
 ---
 
 <BaseLayout
   title={title}
   description={description}
   pathname="/destinos"
+  ogImage={cover ? absoluteUrl(cover.src) : undefined}
+  ogImageAlt={cover?.alt}
+  ogImageWidth={cover?.width}
+  ogImageHeight={cover?.height}
   jsonLd={breadcrumbs}
 >
-  <DestinationsPage client:load />
+  <DestinationsPage client:load destinations={destinations} />
 </BaseLayout>

@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState, type KeyboardEvent, type TouchEvent } from "react";
-import type { Destination } from "../data";
+import type { ResolvedDestination } from "../lib/resolveMedia";
+import { ResponsiveImg } from "./ResponsiveImg";
 import "./DestinationCard.css";
 
 type DestinationCardProps = {
-  destination: Destination;
+  destination: ResolvedDestination;
   variant?: "featured" | "grid";
 };
 
@@ -59,6 +60,9 @@ export function DestinationCard({
       ? destination.featuredTitle
       : destination.name;
 
+  const activeImage = images[index] ?? images[0];
+  if (!activeImage) return null;
+
   return (
     <article
       className={`dest-card dest-card--${variant}`}
@@ -78,15 +82,12 @@ export function DestinationCard({
         onTouchStart={onTouchStart}
         onTouchEnd={onTouchEnd}
       >
-        {images.map((src, i) => (
-          <img
-            key={`${destination.slug}-${i}`}
-            src={src}
-            alt=""
-            className={i === index ? "is-active" : undefined}
-            loading={i === 0 ? "eager" : "lazy"}
-          />
-        ))}
+        <ResponsiveImg
+          key={`${destination.slug}-${index}`}
+          {...activeImage}
+          className="is-active"
+          loading={index === 0 ? "eager" : "lazy"}
+        />
 
         {images.length > 1 && (
           <div className="dest-card__segments" aria-hidden="true">

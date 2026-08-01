@@ -1,6 +1,6 @@
 import { useState, type FormEvent } from "react";
 import { FadeIn } from "./FadeIn";
-import { CONTACT } from "../data";
+import { CONTACT } from "../clientData";
 import "./Contact.css";
 
 export function Contact() {

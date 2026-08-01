@@ -1,5 +1,5 @@
 import { FadeIn } from "./FadeIn";
-import { HOTEL, SERVICES } from "../data";
+import { HOTEL, SERVICES } from "../clientData";
 import "./Services.css";
 
 export function Services() {

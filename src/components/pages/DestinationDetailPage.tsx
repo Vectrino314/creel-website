@@ -1,26 +1,36 @@
 import { useState } from "react";
 import { Breadcrumbs } from "../Breadcrumbs";
 import { FadeIn } from "../FadeIn";
-import { CONTACT, type Destination } from "../../data";
+import { ResponsiveImg } from "../ResponsiveImg";
+import { CONTACT } from "../../clientData";
+import type { ResolvedDestination } from "../../lib/resolveMedia";
 import "./DestinationDetailPage.css";
 
 type DestinationDetailPageProps = {
-  destination: Destination;
+  destination: ResolvedDestination;
 };
 
-export function DestinationDetailPage({ destination }: DestinationDetailPageProps) {
+export function DestinationDetailPage({
+  destination,
+}: DestinationDetailPageProps) {
   const [imageIndex, setImageIndex] = useState(0);
+  const activeImage =
+    destination.images[imageIndex] ?? destination.images[0];
 
   const whatsappHref = `https://wa.me/${CONTACT.whatsapp}?text=${encodeURIComponent(
     `Hola, me interesa el destino ${destination.name}.`,
   )}`;
 
+  if (!activeImage) return null;
+
   return (
     <article className="destination-detail">
       <div className="destination-detail__hero">
-        <img
-          src={destination.images[imageIndex] ?? destination.images[0]}
+        <ResponsiveImg
+          {...activeImage}
           alt=""
+          loading="eager"
+          fetchPriority="high"
         />
         <div className="destination-detail__hero-shade" />
         <div className="container destination-detail__hero-copy">
@@ -33,10 +43,10 @@ export function DestinationDetailPage({ destination }: DestinationDetailPageProp
               ]}
             />
             <span className="destination-detail__tag">{destination.tag}</span>
-            <h1>
-              {destination.featuredTitle ?? destination.name}
-            </h1>
-            <p className="destination-detail__location">{destination.location}</p>
+            <h1>{destination.featuredTitle ?? destination.name}</h1>
+            <p className="destination-detail__location">
+              {destination.location}
+            </p>
           </FadeIn>
         </div>
       </div>
@@ -74,14 +84,11 @@ export function DestinationDetailPage({ destination }: DestinationDetailPageProp
 
         <FadeIn className="destination-detail__gallery" delay={1}>
           <div className="destination-detail__gallery-main">
-            <img
-              src={destination.images[imageIndex] ?? destination.images[0]}
-              alt={`${destination.name} — imagen ${imageIndex + 1}`}
-            />
+            <ResponsiveImg {...activeImage} loading="lazy" />
           </div>
           {destination.images.length > 1 && (
             <div className="destination-detail__thumbs" role="list">
-              {destination.images.map((src, i) => (
+              {destination.thumbs.map((thumb, i) => (
                 <button
                   key={`${destination.slug}-thumb-${i}`}
                   type="button"
@@ -89,25 +96,26 @@ export function DestinationDetailPage({ destination }: DestinationDetailPageProp
                   onClick={() => setImageIndex(i)}
                   aria-label={`Ver imagen ${i + 1}`}
                 >
-                  <img src={src} alt="" />
+                  <ResponsiveImg {...thumb} alt="" loading="lazy" />
                 </button>
               ))}
             </div>
           )}
-          {destination.additionalLinks && destination.additionalLinks.length > 0 && (
-            <div className="destination-detail__extra-links">
-              {destination.additionalLinks.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  {link.label}
-                </a>
-              ))}
-            </div>
-          )}
+          {destination.additionalLinks &&
+            destination.additionalLinks.length > 0 && (
+              <div className="destination-detail__extra-links">
+                {destination.additionalLinks.map((link) => (
+                  <a
+                    key={link.href}
+                    href={link.href}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    {link.label}
+                  </a>
+                ))}
+              </div>
+            )}
         </FadeIn>
       </div>
     </article>

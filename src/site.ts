@@ -7,3 +7,9 @@ export const DEFAULT_DESCRIPTION =
 
 export const DEFAULT_TITLE =
   "Incentitours | Barrancas del Cobre & Chepe Express";
+
+/** Set real profile URLs to show Footer social links and JSON-LD sameAs. */
+export const SOCIAL = {
+  facebook: "",
+  instagram: "",
+} as const;

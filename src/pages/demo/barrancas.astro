@@ -1,0 +1,27 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { BarrancasDepthPage } from "../../components/pages/BarrancasDepthPage";
+import { absoluteUrl } from "../../lib/seo";
+import {
+  getDefaultOgImage,
+  resolveBarrancasDepthMedia,
+} from "../../lib/resolveMedia";
+
+const media = await resolveBarrancasDepthMedia();
+const defaultOg = await getDefaultOgImage();
+const ogUrl = absoluteUrl(defaultOg.src);
+const pathname = "/demo/barrancas";
+---
+
+<BaseLayout
+  title="Demo · Barrancas Depth"
+  description="Portada experimental: tipografía detrás del paisaje de las Barrancas del Cobre con zoom al hacer scroll."
+  pathname={pathname}
+  ogImage={ogUrl}
+  ogImageAlt={defaultOg.alt}
+  ogImageWidth={defaultOg.width}
+  ogImageHeight={defaultOg.height}
+  noIndex
+>
+  <BarrancasDepthPage client:load media={media} />
+</BaseLayout>

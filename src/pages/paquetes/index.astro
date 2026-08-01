@@ -1,7 +1,8 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { PackagesPage } from "../../components/pages/PackagesPage";
-import { breadcrumbJsonLd } from "../../lib/seo";
+import { absoluteUrl, breadcrumbJsonLd } from "../../lib/seo";
+import { resolveAllPackages } from "../../lib/resolveMedia";
 
 const title = "Paquetes Chepe Express y Barrancas del Cobre";
 const description =
@@ -10,13 +11,19 @@ const breadcrumbs = breadcrumbJsonLd([
   { label: "Inicio", path: "/" },
   { label: "Paquetes", path: "/paquetes" },
 ]);
+const packages = await resolveAllPackages();
+const cover = packages[0]?.images[0];
 ---
 
 <BaseLayout
   title={title}
   description={description}
   pathname="/paquetes"
+  ogImage={cover ? absoluteUrl(cover.src) : undefined}
+  ogImageAlt={cover?.alt}
+  ogImageWidth={cover?.width}
+  ogImageHeight={cover?.height}
   jsonLd={breadcrumbs}
 >
-  <PackagesPage client:load />
+  <PackagesPage client:load packages={packages} />
 </BaseLayout>

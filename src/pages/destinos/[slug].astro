@@ -3,9 +3,11 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import { DestinationDetailPage } from "../../components/pages/DestinationDetailPage";
 import { DESTINATIONS, getDestinationBySlug } from "../../data";
 import {
+  absoluteUrl,
   breadcrumbJsonLd,
   touristDestinationJsonLd,
 } from "../../lib/seo";
+import { resolveDestination } from "../../lib/resolveMedia";
 
 export function getStaticPaths() {
   return DESTINATIONS.map((destination) => ({
@@ -14,17 +16,20 @@ export function getStaticPaths() {
 }
 
 const { slug } = Astro.params;
-const destination = getDestinationBySlug(slug ?? "");
+const source = getDestinationBySlug(slug ?? "");
 
-if (!destination) {
+if (!source) {
   return Astro.redirect("/destinos");
 }
 
+const destination = await resolveDestination(source, "detail");
 const title = destination.featuredTitle ?? destination.name;
 const description = destination.blurb;
 const pathname = `/destinos/${destination.slug}`;
+const cover = destination.images[0]!;
+const ogUrl = absoluteUrl(cover.src);
 const jsonLd = [
-  touristDestinationJsonLd(destination),
+  touristDestinationJsonLd(source, ogUrl),
   breadcrumbJsonLd([
     { label: "Inicio", path: "/" },
     { label: "Destinos", path: "/destinos" },
@@ -37,7 +42,10 @@ const jsonLd = [
   title={title}
   description={description}
   pathname={pathname}
-  ogImage={destination.images[0]}
+  ogImage={ogUrl}
+  ogImageAlt={cover.alt}
+  ogImageWidth={cover.width}
+  ogImageHeight={cover.height}
   jsonLd={jsonLd}
 >
   <DestinationDetailPage client:load destination={destination} />

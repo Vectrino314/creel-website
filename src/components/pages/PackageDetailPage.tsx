@@ -1,24 +1,34 @@
 import { useState } from "react";
 import { Breadcrumbs } from "../Breadcrumbs";
 import { FadeIn } from "../FadeIn";
-import { CONTACT, type Package } from "../../data";
+import { ResponsiveImg } from "../ResponsiveImg";
+import { CONTACT } from "../../clientData";
+import type { ResolvedPackage } from "../../lib/resolveMedia";
 import "./PackageDetailPage.css";
 
 type PackageDetailPageProps = {
-  pkg: Package;
+  pkg: ResolvedPackage;
 };
 
 export function PackageDetailPage({ pkg }: PackageDetailPageProps) {
   const [imageIndex, setImageIndex] = useState(0);
+  const activeImage = pkg.images[imageIndex] ?? pkg.images[0];
 
   const whatsappHref = `https://wa.me/${CONTACT.whatsapp}?text=${encodeURIComponent(
     `Hola, me interesa el paquete ${pkg.name}.`,
   )}`;
 
+  if (!activeImage) return null;
+
   return (
     <article className="package-detail">
       <div className="package-detail__hero">
-        <img src={pkg.images[imageIndex] ?? pkg.images[0]} alt="" />
+        <ResponsiveImg
+          {...activeImage}
+          alt=""
+          loading="eager"
+          fetchPriority="high"
+        />
         <div className="package-detail__hero-shade" />
         <div className="container package-detail__hero-copy">
           <FadeIn>
@@ -69,14 +79,11 @@ export function PackageDetailPage({ pkg }: PackageDetailPageProps) {
 
         <FadeIn className="package-detail__gallery" delay={1}>
           <div className="package-detail__gallery-main">
-            <img
-              src={pkg.images[imageIndex] ?? pkg.images[0]}
-              alt={`${pkg.name} — imagen ${imageIndex + 1}`}
-            />
+            <ResponsiveImg {...activeImage} loading="lazy" />
           </div>
           {pkg.images.length > 1 && (
             <div className="package-detail__thumbs" role="list">
-              {pkg.images.map((src, i) => (
+              {pkg.thumbs.map((thumb, i) => (
                 <button
                   key={`${pkg.slug}-thumb-${i}`}
                   type="button"
@@ -84,7 +91,7 @@ export function PackageDetailPage({ pkg }: PackageDetailPageProps) {
                   onClick={() => setImageIndex(i)}
                   aria-label={`Ver imagen ${i + 1}`}
                 >
-                  <img src={src} alt="" />
+                  <ResponsiveImg {...thumb} alt="" loading="lazy" />
                 </button>
               ))}
             </div>

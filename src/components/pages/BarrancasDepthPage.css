@@ -1,0 +1,47 @@
+.barrancas-depth-page {
+  background:
+    linear-gradient(180deg, #1a2e28 0%, var(--mist) 28%, var(--mist) 100%);
+}
+
+.depth-outro {
+  position: relative;
+  padding: clamp(4rem, 10vh, 7rem) 0 clamp(5rem, 12vh, 8rem);
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(166, 124, 82, 0.12), transparent 55%),
+    var(--mist);
+}
+
+.depth-outro__inner {
+  max-width: 40rem;
+  text-align: center;
+}
+
+.depth-outro .eyebrow {
+  color: var(--copper);
+}
+
+.depth-outro .section-title {
+  margin-top: 0.75rem;
+}
+
+.depth-outro .section-lead {
+  margin-inline: auto;
+}
+
+.depth-outro__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 1.75rem;
+}
+
+.depth-outro__ghost {
+  border-color: rgba(21, 36, 31, 0.22);
+  color: var(--ink);
+  background: transparent;
+}
+
+.depth-outro__ghost:hover {
+  background: rgba(21, 36, 31, 0.05);
+}

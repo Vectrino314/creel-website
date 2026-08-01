@@ -1,8 +1,13 @@
 import { FadeIn } from "./FadeIn";
-import { EXPERIENCES } from "../data";
+import { ResponsiveImg } from "./ResponsiveImg";
+import type { ResolvedExperience } from "../lib/resolveMedia";
 import "./Experiences.css";
 
-export function Experiences() {
+type ExperiencesProps = {
+  items: ResolvedExperience[];
+};
+
+export function Experiences({ items }: ExperiencesProps) {
   return (
     <section id="experiencias" className="experiences">
       <div className="container">
@@ -17,13 +22,13 @@ export function Experiences() {
       </div>
 
       <div className="experiences__list">
-        {EXPERIENCES.map((item, i) => (
+        {items.map((item, i) => (
           <article
             key={item.title}
             className={`experience-block${i % 2 === 1 ? " is-reversed" : ""}`}
           >
             <FadeIn className="experience-block__media" delay={(i % 3) as 0 | 1 | 2}>
-              <img src={item.image} alt="" loading="lazy" />
+              <ResponsiveImg {...item.image} loading="lazy" />
             </FadeIn>
             <FadeIn className="experience-block__copy" delay={1}>
               <span className="eyebrow">{item.eyebrow}</span>

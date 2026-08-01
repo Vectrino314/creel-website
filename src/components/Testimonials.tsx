@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { FadeIn } from "./FadeIn";
-import { TESTIMONIALS } from "../data";
+import { TESTIMONIALS } from "../clientData";
 import "./Testimonials.css";
 
 export function Testimonials() {

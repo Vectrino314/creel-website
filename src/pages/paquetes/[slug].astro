@@ -2,7 +2,12 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { PackageDetailPage } from "../../components/pages/PackageDetailPage";
 import { PACKAGES, getPackageBySlug } from "../../data";
-import { breadcrumbJsonLd, touristTripJsonLd } from "../../lib/seo";
+import {
+  absoluteUrl,
+  breadcrumbJsonLd,
+  touristTripJsonLd,
+} from "../../lib/seo";
+import { resolvePackage } from "../../lib/resolveMedia";
 
 export function getStaticPaths() {
   return PACKAGES.map((pkg) => ({
@@ -11,15 +16,18 @@ export function getStaticPaths() {
 }
 
 const { slug } = Astro.params;
-const pkg = getPackageBySlug(slug ?? "");
+const source = getPackageBySlug(slug ?? "");
 
-if (!pkg) {
+if (!source) {
   return Astro.redirect("/paquetes");
 }
 
+const pkg = await resolvePackage(source, "detail");
 const pathname = `/paquetes/${pkg.slug}`;
+const cover = pkg.images[0]!;
+const ogUrl = absoluteUrl(cover.src);
 const jsonLd = [
-  touristTripJsonLd(pkg),
+  touristTripJsonLd(source, ogUrl),
   breadcrumbJsonLd([
     { label: "Inicio", path: "/" },
     { label: "Paquetes", path: "/paquetes" },
@@ -32,7 +40,10 @@ const jsonLd = [
   title={pkg.name}
   description={pkg.summary}
   pathname={pathname}
-  ogImage={pkg.images[0]}
+  ogImage={ogUrl}
+  ogImageAlt={cover.alt}
+  ogImageWidth={cover.width}
+  ogImageHeight={cover.height}
   jsonLd={jsonLd}
 >
   <PackageDetailPage client:load pkg={pkg} />

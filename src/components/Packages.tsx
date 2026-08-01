@@ -1,5 +1,5 @@
 import { FadeIn } from "./FadeIn";
-import { PACKAGES } from "../data";
+import { PACKAGE_LIST } from "../clientData";
 import "./Packages.css";
 
 export function Packages() {
@@ -17,7 +17,7 @@ export function Packages() {
       </div>
 
       <div className="packages__list container">
-        {PACKAGES.map((pkg, i) => (
+        {PACKAGE_LIST.map((pkg, i) => (
           <FadeIn
             key={pkg.slug}
             as="article"

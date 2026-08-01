@@ -1,30 +1,39 @@
 import { useEffect, useState } from "react";
-import { HERO_SLIDES } from "../data";
+import type { ResolvedHeroSlide } from "../lib/resolveMedia";
+import { ResponsiveImg } from "./ResponsiveImg";
 import "./Hero.css";
 
-export function Hero() {
+type HeroProps = {
+  slides: ResolvedHeroSlide[];
+};
+
+export function Hero({ slides }: HeroProps) {
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
+    if (slides.length <= 1) return;
     const id = window.setInterval(() => {
-      setIndex((i) => (i + 1) % HERO_SLIDES.length);
+      setIndex((i) => (i + 1) % slides.length);
     }, 6500);
     return () => window.clearInterval(id);
-  }, []);
+  }, [slides.length]);
 
-  const slide = HERO_SLIDES[index] ?? HERO_SLIDES[0];
+  const slide = slides[index] ?? slides[0];
+  if (!slide) return null;
 
   return (
     <section id="inicio" className="hero" aria-label="Inicio">
-      {HERO_SLIDES.map((item, i) => (
+      {slides.map((item, i) => (
         <div
           key={item.title}
           className={`hero__slide${i === index ? " is-active" : ""}`}
           aria-hidden={i !== index}
         >
-          <div
+          <ResponsiveImg
+            {...item.image}
             className="hero__bg"
-            style={{ backgroundImage: `url(${item.image})` }}
+            loading={i === 0 ? "eager" : "lazy"}
+            fetchPriority={i === 0 ? "high" : "auto"}
           />
         </div>
       ))}
@@ -49,7 +58,7 @@ export function Hero() {
       </div>
 
       <div className="hero__dots" role="tablist" aria-label="Diapositivas">
-        {HERO_SLIDES.map((item, i) => (
+        {slides.map((item, i) => (
           <button
             key={item.title}
             type="button"

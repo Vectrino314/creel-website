@@ -7,17 +7,25 @@ import { Trust } from "../Trust";
 import { About } from "../About";
 import { Testimonials } from "../Testimonials";
 import { Contact } from "../Contact";
+import type { HomeMedia } from "../../lib/resolveMedia";
 
-export function HomePage() {
+type HomePageProps = {
+  media: HomeMedia;
+};
+
+export function HomePage({ media }: HomePageProps) {
   return (
     <>
-      <Hero />
-      <Experiences />
-      <Destinations />
+      <Hero slides={media.heroSlides} />
+      <Experiences items={media.experiences} />
+      <Destinations destinations={media.destinations} />
       <Packages />
       <Services />
-      <Trust />
-      <About />
+      <Trust
+        certifications={media.certifications}
+        partners={media.partners}
+      />
+      <About image={media.aboutImage} />
       <Testimonials />
       <Contact />
     </>

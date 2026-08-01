@@ -2,14 +2,31 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { HomePage } from "../components/pages/HomePage";
 import { DEFAULT_DESCRIPTION, DEFAULT_TITLE } from "../site";
-import { travelAgencyJsonLd } from "../lib/seo";
+import { absoluteUrl, travelAgencyJsonLd } from "../lib/seo";
+import {
+  getDefaultOgImage,
+  optimizeLogo,
+  resolveHomeMedia,
+} from "../lib/resolveMedia";
+
+const media = await resolveHomeMedia();
+const defaultOg = await getDefaultOgImage();
+const logo = await optimizeLogo();
+const ogUrl = absoluteUrl(defaultOg.src);
 ---
 
 <BaseLayout
   title={DEFAULT_TITLE}
   description={DEFAULT_DESCRIPTION}
   pathname="/"
-  jsonLd={travelAgencyJsonLd()}
+  ogImage={ogUrl}
+  ogImageAlt={defaultOg.alt}
+  ogImageWidth={defaultOg.width}
+  ogImageHeight={defaultOg.height}
+  jsonLd={travelAgencyJsonLd({
+    image: ogUrl,
+    logo: absoluteUrl(logo.src),
+  })}
 >
-  <HomePage client:load />
+  <HomePage client:load media={media} />
 </BaseLayout>

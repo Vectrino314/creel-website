@@ -1,9 +1,14 @@
 import { Breadcrumbs } from "../Breadcrumbs";
 import { FadeIn } from "../FadeIn";
-import { PACKAGES } from "../../data";
+import { ResponsiveImg } from "../ResponsiveImg";
+import type { ResolvedPackage } from "../../lib/resolveMedia";
 import "./PackagesPage.css";
 
-export function PackagesPage() {
+type PackagesPageProps = {
+  packages: ResolvedPackage[];
+};
+
+export function PackagesPage({ packages }: PackagesPageProps) {
   return (
     <section className="packages-page">
       <div className="container packages-page__intro">
@@ -24,31 +29,37 @@ export function PackagesPage() {
       </div>
 
       <div className="packages-page__list container">
-        {PACKAGES.map((pkg, i) => (
-          <FadeIn
-            key={pkg.slug}
-            as="article"
-            className="packages-page__card"
-            delay={(i % 3) as 0 | 1 | 2}
-          >
-            <a href={`/paquetes/${pkg.slug}`} className="packages-page__link">
-              <div className="packages-page__image">
-                <img src={pkg.images[0]} alt="" loading="lazy" />
-              </div>
-              <div className="packages-page__body">
-                <div className="packages-page__meta">
-                  <span className="packages-page__duration">{pkg.duration}</span>
-                  <span className="packages-page__departures">
-                    {pkg.departures}
-                  </span>
+        {packages.map((pkg, i) => {
+          const cover = pkg.images[0];
+          if (!cover) return null;
+          return (
+            <FadeIn
+              key={pkg.slug}
+              as="article"
+              className="packages-page__card"
+              delay={(i % 3) as 0 | 1 | 2}
+            >
+              <a href={`/paquetes/${pkg.slug}`} className="packages-page__link">
+                <div className="packages-page__image">
+                  <ResponsiveImg {...cover} loading="lazy" />
                 </div>
-                <h2>{pkg.name}</h2>
-                <p>{pkg.summary}</p>
-                <span className="packages-page__cta">Ver itinerario</span>
-              </div>
-            </a>
-          </FadeIn>
-        ))}
+                <div className="packages-page__body">
+                  <div className="packages-page__meta">
+                    <span className="packages-page__duration">
+                      {pkg.duration}
+                    </span>
+                    <span className="packages-page__departures">
+                      {pkg.departures}
+                    </span>
+                  </div>
+                  <h2>{pkg.name}</h2>
+                  <p>{pkg.summary}</p>
+                  <span className="packages-page__cta">Ver itinerario</span>
+                </div>
+              </a>
+            </FadeIn>
+          );
+        })}
       </div>
     </section>
   );

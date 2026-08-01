@@ -1,9 +1,12 @@
-import { useState } from "react";
-import { CONTACT } from "../data";
+import { useEffect, useState } from "react";
+import { CONTACT } from "../clientData";
 import "./WhatsAppFab.css";
 
 const MESSAGE =
   "¡Hola buen día!, Me gustaría saber mas sobre sus paquetes de viaje";
+
+/** Scroll past this before the desktop QR card auto-appears. */
+const CARD_REVEAL_Y = 420;
 
 const WhatsAppIcon = () => (
   <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -15,19 +18,27 @@ const WhatsAppIcon = () => (
 );
 
 export function WhatsAppFab() {
-  const [cardOpen, setCardOpen] = useState(true);
+  const [pastReveal, setPastReveal] = useState(false);
+  const [dismissed, setDismissed] = useState(false);
 
   const href = `https://wa.me/${CONTACT.whatsapp}?text=${encodeURIComponent(MESSAGE)}`;
-  const qrSrc = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&margin=8&data=${encodeURIComponent(href)}`;
+  const showCard = pastReveal && !dismissed;
+
+  useEffect(() => {
+    const update = () => setPastReveal(window.scrollY > CARD_REVEAL_Y);
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    return () => window.removeEventListener("scroll", update);
+  }, []);
 
   return (
-    <div className="whatsapp-widget">
-      {cardOpen ? (
+    <div className={`whatsapp-widget${showCard ? " is-card" : " is-fab"}`}>
+      {showCard ? (
         <aside className="whatsapp-card" aria-label="Contacto por WhatsApp">
           <button
             type="button"
             className="whatsapp-card__close"
-            onClick={() => setCardOpen(false)}
+            onClick={() => setDismissed(true)}
             aria-label="Cerrar"
           >
             <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -47,10 +58,12 @@ export function WhatsAppFab() {
 
           <img
             className="whatsapp-card__qr"
-            src={qrSrc}
+            src="/whatsapp-qr.png"
             width={180}
             height={180}
             alt="Código QR para abrir WhatsApp"
+            loading="lazy"
+            decoding="async"
           />
 
           <p className="whatsapp-card__hint">Escanea el código con tu celular</p>
@@ -67,7 +80,13 @@ export function WhatsAppFab() {
         <button
           type="button"
           className="whatsapp-fab whatsapp-fab--desktop"
-          onClick={() => setCardOpen(true)}
+          onClick={() => {
+            if (pastReveal) {
+              setDismissed(false);
+              return;
+            }
+            window.open(href, "_blank", "noopener,noreferrer");
+          }}
           aria-label="Abrir WhatsApp"
           title="Escríbenos por WhatsApp"
         >

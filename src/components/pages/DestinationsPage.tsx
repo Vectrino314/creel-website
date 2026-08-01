@@ -1,12 +1,19 @@
 import { FadeIn } from "../FadeIn";
 import { Breadcrumbs } from "../Breadcrumbs";
 import { DestinationCard } from "../DestinationCard";
-import { getFeaturedDestination, getGridDestinations } from "../../data";
+import type { ResolvedDestination } from "../../lib/resolveMedia";
 import "./DestinationsPage.css";
 
-export function DestinationsPage() {
-  const featured = getFeaturedDestination();
-  const grid = getGridDestinations();
+type DestinationsPageProps = {
+  destinations: ResolvedDestination[];
+};
+
+export function DestinationsPage({ destinations }: DestinationsPageProps) {
+  const featured =
+    destinations.find((d) => d.featured) ?? destinations[0];
+  const grid = destinations.filter((d) => !d.featured);
+
+  if (!featured) return null;
 
   return (
     <section className="destinations-page">
@@ -35,10 +42,7 @@ export function DestinationsPage() {
 
         <div className="destinations-page__grid">
           {grid.map((dest, i) => (
-            <FadeIn
-              key={dest.slug}
-              delay={(i % 3) as 0 | 1 | 2}
-            >
+            <FadeIn key={dest.slug} delay={(i % 3) as 0 | 1 | 2}>
               <DestinationCard destination={dest} variant="grid" />
             </FadeIn>
           ))}
