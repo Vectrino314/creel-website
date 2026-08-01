@@ -1,7 +1,6 @@
-import { Link } from "react-router-dom";
-import { Breadcrumbs } from "../components/Breadcrumbs";
-import { FadeIn } from "../components/FadeIn";
-import { PACKAGES } from "../data";
+import { Breadcrumbs } from "../Breadcrumbs";
+import { FadeIn } from "../FadeIn";
+import { PACKAGES } from "../../data";
 import "./PackagesPage.css";
 
 export function PackagesPage() {
@@ -32,7 +31,7 @@ export function PackagesPage() {
             className="packages-page__card"
             delay={(i % 3) as 0 | 1 | 2}
           >
-            <Link to={`/paquetes/${pkg.slug}`} className="packages-page__link">
+            <a href={`/paquetes/${pkg.slug}`} className="packages-page__link">
               <div className="packages-page__image">
                 <img src={pkg.images[0]} alt="" loading="lazy" />
               </div>
@@ -47,7 +46,7 @@ export function PackagesPage() {
                 <p>{pkg.summary}</p>
                 <span className="packages-page__cta">Ver itinerario</span>
               </div>
-            </Link>
+            </a>
           </FadeIn>
         ))}
       </div>

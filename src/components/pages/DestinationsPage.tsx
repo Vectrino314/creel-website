@@ -1,7 +1,7 @@
-import { FadeIn } from "../components/FadeIn";
-import { Breadcrumbs } from "../components/Breadcrumbs";
-import { DestinationCard } from "../components/DestinationCard";
-import { getFeaturedDestination, getGridDestinations } from "../data";
+import { FadeIn } from "../FadeIn";
+import { Breadcrumbs } from "../Breadcrumbs";
+import { DestinationCard } from "../DestinationCard";
+import { getFeaturedDestination, getGridDestinations } from "../../data";
 import "./DestinationsPage.css";
 
 export function DestinationsPage() {

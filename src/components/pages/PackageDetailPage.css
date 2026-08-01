@@ -94,6 +94,11 @@
   margin-bottom: 1.1rem;
 }
 
+.package-detail__highlights-title {
+  margin: 1.75rem 0 0.75rem;
+  font-size: 1.35rem;
+}
+
 .package-detail__highlights {
   margin: 1.75rem 0 0;
   padding: 0;

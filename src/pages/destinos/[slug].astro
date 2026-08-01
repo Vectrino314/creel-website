@@ -1,0 +1,44 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { DestinationDetailPage } from "../../components/pages/DestinationDetailPage";
+import { DESTINATIONS, getDestinationBySlug } from "../../data";
+import {
+  breadcrumbJsonLd,
+  touristDestinationJsonLd,
+} from "../../lib/seo";
+
+export function getStaticPaths() {
+  return DESTINATIONS.map((destination) => ({
+    params: { slug: destination.slug },
+  }));
+}
+
+const { slug } = Astro.params;
+const destination = getDestinationBySlug(slug ?? "");
+
+if (!destination) {
+  return Astro.redirect("/destinos");
+}
+
+const title = destination.featuredTitle ?? destination.name;
+const description = destination.blurb;
+const pathname = `/destinos/${destination.slug}`;
+const jsonLd = [
+  touristDestinationJsonLd(destination),
+  breadcrumbJsonLd([
+    { label: "Inicio", path: "/" },
+    { label: "Destinos", path: "/destinos" },
+    { label: destination.name, path: pathname },
+  ]),
+];
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  pathname={pathname}
+  ogImage={destination.images[0]}
+  jsonLd={jsonLd}
+>
+  <DestinationDetailPage client:load destination={destination} />
+</BaseLayout>

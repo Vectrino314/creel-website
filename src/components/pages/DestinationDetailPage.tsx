@@ -1,18 +1,15 @@
 import { useState } from "react";
-import { Link, Navigate, useParams } from "react-router-dom";
-import { Breadcrumbs } from "../components/Breadcrumbs";
-import { FadeIn } from "../components/FadeIn";
-import { CONTACT, getDestinationBySlug } from "../data";
+import { Breadcrumbs } from "../Breadcrumbs";
+import { FadeIn } from "../FadeIn";
+import { CONTACT, type Destination } from "../../data";
 import "./DestinationDetailPage.css";
 
-export function DestinationDetailPage() {
-  const { slug = "" } = useParams();
-  const destination = getDestinationBySlug(slug);
-  const [imageIndex, setImageIndex] = useState(0);
+type DestinationDetailPageProps = {
+  destination: Destination;
+};
 
-  if (!destination) {
-    return <Navigate to="/destinos" replace />;
-  }
+export function DestinationDetailPage({ destination }: DestinationDetailPageProps) {
+  const [imageIndex, setImageIndex] = useState(0);
 
   const whatsappHref = `https://wa.me/${CONTACT.whatsapp}?text=${encodeURIComponent(
     `Hola, me interesa el destino ${destination.name}.`,
@@ -50,6 +47,7 @@ export function DestinationDetailPage() {
             <p key={paragraph.slice(0, 48)}>{paragraph}</p>
           ))}
 
+          <h2 className="destination-detail__highlights-title">Destacados</h2>
           <ul className="destination-detail__highlights">
             {destination.highlights.map((item) => (
               <li key={item}>{item}</li>
@@ -57,9 +55,9 @@ export function DestinationDetailPage() {
           </ul>
 
           <div className="destination-detail__actions">
-            <Link className="destination-detail__primary" to="/#contacto">
+            <a className="destination-detail__primary" href="/#contacto">
               Planifica tu viaje
-            </Link>
+            </a>
             <a
               className="destination-detail__secondary"
               href={whatsappHref}
@@ -68,9 +66,9 @@ export function DestinationDetailPage() {
             >
               WhatsApp
             </a>
-            <Link className="destination-detail__ghost" to="/destinos">
+            <a className="destination-detail__ghost" href="/destinos">
               ← Todos los destinos
-            </Link>
+            </a>
           </div>
         </FadeIn>
 

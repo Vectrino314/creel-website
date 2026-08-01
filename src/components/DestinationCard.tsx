@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState, type KeyboardEvent, type TouchEvent } from "react";
-import { Link } from "react-router-dom";
 import type { Destination } from "../data";
 import "./DestinationCard.css";
 
@@ -130,12 +129,12 @@ export function DestinationCard({
         )}
 
         <div className="dest-card__ctas">
-          <Link
+          <a
             className="dest-card__cta"
-            to={`/destinos/${destination.slug}`}
+            href={`/destinos/${destination.slug}`}
           >
             Ver destino
-          </Link>
+          </a>
           {additionalLinks.map((link) => (
             <a
               key={link.href}
@@ -152,7 +151,7 @@ export function DestinationCard({
 
       <div className="dest-card__body">
         <h3>
-          <Link to={`/destinos/${destination.slug}`}>{title}</Link>
+          <a href={`/destinos/${destination.slug}`}>{title}</a>
         </h3>
         <p>{destination.blurb}</p>
       </div>

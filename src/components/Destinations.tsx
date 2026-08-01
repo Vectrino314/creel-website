@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import { FadeIn } from "./FadeIn";
 import { DESTINATIONS, getFeaturedDestination } from "../data";
 import "./Destinations.css";
@@ -31,7 +30,7 @@ export function Destinations() {
             className="destination"
             delay={(i % 3) as 0 | 1 | 2}
           >
-            <Link to={`/destinos/${dest.slug}`} className="destination__link">
+            <a href={`/destinos/${dest.slug}`} className="destination__link">
               <div className="destination__image">
                 <img
                   src={dest.images[0]}
@@ -53,16 +52,16 @@ export function Destinations() {
                 </h3>
                 <p>{dest.blurb}</p>
               </div>
-            </Link>
+            </a>
           </FadeIn>
         ))}
       </div>
 
       <div className="container destinations__cta-wrap">
         <FadeIn>
-          <Link className="destinations__cta" to="/destinos">
+          <a className="destinations__cta" href="/destinos">
             Ver todos los destinos
-          </Link>
+          </a>
         </FadeIn>
       </div>
     </section>

@@ -1,0 +1,22 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Página no encontrada"
+  description="La página que buscas no existe. Explora destinos y paquetes de Incentitours."
+  pathname="/404"
+  noIndex
+>
+  <section class="container" style="padding: 8rem 0 5rem; text-align: center;">
+    <h1 class="section-title">Página no encontrada</h1>
+    <p class="section-lead" style="margin-inline: auto;">
+      El enlace no existe o fue movido. Vuelve al inicio o explora nuestros destinos y paquetes.
+    </p>
+    <p style="margin-top: 2rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+      <a class="btn btn-primary" href="/">Inicio</a>
+      <a class="btn btn-ghost" href="/destinos">Destinos</a>
+      <a class="btn btn-ghost" href="/paquetes">Paquetes</a>
+    </p>
+  </section>
+</BaseLayout>

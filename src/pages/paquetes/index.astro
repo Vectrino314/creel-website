@@ -1,0 +1,22 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { PackagesPage } from "../../components/pages/PackagesPage";
+import { breadcrumbJsonLd } from "../../lib/seo";
+
+const title = "Paquetes Chepe Express y Barrancas del Cobre";
+const description =
+  "Paquetes de 3 a 7 días por la Sierra Tarahumara: Barrancas Express, Pueblos Mágicos, Altura y Aventura, Cultural, Espectacular y Maravillosa.";
+const breadcrumbs = breadcrumbJsonLd([
+  { label: "Inicio", path: "/" },
+  { label: "Paquetes", path: "/paquetes" },
+]);
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  pathname="/paquetes"
+  jsonLd={breadcrumbs}
+>
+  <PackagesPage client:load />
+</BaseLayout>

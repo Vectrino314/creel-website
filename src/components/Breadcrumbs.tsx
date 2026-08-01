@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import "./Breadcrumbs.css";
 
 export type Crumb = {
@@ -19,7 +18,7 @@ export function Breadcrumbs({ items }: BreadcrumbsProps) {
           return (
             <li key={`${item.label}-${index}`}>
               {item.to && !isLast ? (
-                <Link to={item.to}>{item.label}</Link>
+                <a href={item.to}>{item.label}</a>
               ) : (
                 <span aria-current={isLast ? "page" : undefined}>{item.label}</span>
               )}

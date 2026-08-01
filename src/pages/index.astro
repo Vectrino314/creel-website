@@ -1,0 +1,15 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { HomePage } from "../components/pages/HomePage";
+import { DEFAULT_DESCRIPTION, DEFAULT_TITLE } from "../site";
+import { travelAgencyJsonLd } from "../lib/seo";
+---
+
+<BaseLayout
+  title={DEFAULT_TITLE}
+  description={DEFAULT_DESCRIPTION}
+  pathname="/"
+  jsonLd={travelAgencyJsonLd()}
+>
+  <HomePage client:load />
+</BaseLayout>

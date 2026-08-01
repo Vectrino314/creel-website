@@ -1,0 +1,39 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { PackageDetailPage } from "../../components/pages/PackageDetailPage";
+import { PACKAGES, getPackageBySlug } from "../../data";
+import { breadcrumbJsonLd, touristTripJsonLd } from "../../lib/seo";
+
+export function getStaticPaths() {
+  return PACKAGES.map((pkg) => ({
+    params: { slug: pkg.slug },
+  }));
+}
+
+const { slug } = Astro.params;
+const pkg = getPackageBySlug(slug ?? "");
+
+if (!pkg) {
+  return Astro.redirect("/paquetes");
+}
+
+const pathname = `/paquetes/${pkg.slug}`;
+const jsonLd = [
+  touristTripJsonLd(pkg),
+  breadcrumbJsonLd([
+    { label: "Inicio", path: "/" },
+    { label: "Paquetes", path: "/paquetes" },
+    { label: pkg.name, path: pathname },
+  ]),
+];
+---
+
+<BaseLayout
+  title={pkg.name}
+  description={pkg.summary}
+  pathname={pathname}
+  ogImage={pkg.images[0]}
+  jsonLd={jsonLd}
+>
+  <PackageDetailPage client:load pkg={pkg} />
+</BaseLayout>

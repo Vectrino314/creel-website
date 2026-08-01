@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import { FadeIn } from "./FadeIn";
 import { PACKAGES } from "../data";
 import "./Packages.css";
@@ -31,18 +30,18 @@ export function Packages() {
             </div>
             <h3>{pkg.name}</h3>
             <p>{pkg.summary}</p>
-            <Link className="package__cta" to={`/paquetes/${pkg.slug}`}>
+            <a className="package__cta" href={`/paquetes/${pkg.slug}`}>
               Ver itinerario
-            </Link>
+            </a>
           </FadeIn>
         ))}
       </div>
 
       <div className="container packages__cta-wrap">
         <FadeIn>
-          <Link className="packages__all" to="/paquetes">
+          <a className="packages__all" href="/paquetes">
             Ver todos los paquetes
-          </Link>
+          </a>
         </FadeIn>
       </div>
     </section>

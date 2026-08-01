@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { Link, NavLink, useLocation } from "react-router-dom";
 import { LOGO, NAV_LINKS } from "../data";
 import "./Header.css";
 
@@ -7,8 +6,11 @@ function isRouteLink(href: string) {
   return href.startsWith("/") && !href.includes("#");
 }
 
-export function Header() {
-  const { pathname } = useLocation();
+type HeaderProps = {
+  pathname?: string;
+};
+
+export function Header({ pathname = "/" }: HeaderProps) {
   const isHome = pathname === "/";
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
@@ -66,31 +68,29 @@ export function Header() {
           .join(" ")}
       >
         <div className="site-header__inner container-wide">
-          <Link to="/" className="brand" onClick={closeMenu}>
+          <a href="/" className="brand" onClick={closeMenu}>
             <img className="brand__logo" src={LOGO} alt="Incentitours" />
-          </Link>
+          </a>
 
           <nav className="site-nav" aria-label="Principal">
-            {NAV_LINKS.map((link) =>
-              isRouteLink(link.href) ? (
-                <NavLink
+            {NAV_LINKS.map((link) => {
+              const active =
+                isRouteLink(link.href) && pathname.startsWith(link.href);
+              return (
+                <a
                   key={link.href}
-                  to={link.href}
-                  className={({ isActive }) => (isActive ? "is-active" : undefined)}
+                  href={link.href}
+                  className={active ? "is-active" : undefined}
                 >
                   {link.label}
-                </NavLink>
-              ) : (
-                <Link key={link.href} to={link.href}>
-                  {link.label}
-                </Link>
-              ),
-            )}
+                </a>
+              );
+            })}
           </nav>
 
-          <Link className="header-cta" to="/#contacto">
+          <a className="header-cta" href="/#contacto">
             Planifica tu viaje
-          </Link>
+          </a>
 
           <button
             type="button"
@@ -113,36 +113,29 @@ export function Header() {
         aria-hidden={!open}
       >
         <nav aria-label="Móvil">
-          {NAV_LINKS.map((link) =>
-            isRouteLink(link.href) ? (
-              <NavLink
+          {NAV_LINKS.map((link) => {
+            const active =
+              isRouteLink(link.href) && pathname.startsWith(link.href);
+            return (
+              <a
                 key={link.href}
-                to={link.href}
+                href={link.href}
                 onClick={closeMenu}
                 tabIndex={open ? 0 : -1}
-                className={({ isActive }) => (isActive ? "is-active" : undefined)}
+                className={active ? "is-active" : undefined}
               >
                 {link.label}
-              </NavLink>
-            ) : (
-              <Link
-                key={link.href}
-                to={link.href}
-                onClick={closeMenu}
-                tabIndex={open ? 0 : -1}
-              >
-                {link.label}
-              </Link>
-            ),
-          )}
-          <Link
+              </a>
+            );
+          })}
+          <a
             className="mobile-nav__cta"
-            to="/#contacto"
+            href="/#contacto"
             onClick={closeMenu}
             tabIndex={open ? 0 : -1}
           >
             Planifica tu viaje
-          </Link>
+          </a>
         </nav>
       </div>
     </>

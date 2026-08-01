@@ -1,0 +1,99 @@
+---
+import "../index.css";
+import { Header } from "../components/Header";
+import { Footer } from "../components/Footer";
+import { WhatsAppFab } from "../components/WhatsAppFab";
+import {
+  DEFAULT_DESCRIPTION,
+  DEFAULT_TITLE,
+  SITE_NAME,
+} from "../site";
+import { absoluteUrl } from "../lib/seo";
+
+type Props = {
+  title?: string;
+  description?: string;
+  pathname?: string;
+  ogImage?: string;
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+  noIndex?: boolean;
+};
+
+const {
+  title = DEFAULT_TITLE,
+  description = DEFAULT_DESCRIPTION,
+  pathname = "/",
+  ogImage,
+  jsonLd,
+  noIndex = false,
+} = Astro.props;
+
+const canonical = absoluteUrl(pathname);
+const fullTitle = title === DEFAULT_TITLE ? title : `${title} | ${SITE_NAME}`;
+const resolvedOg =
+  typeof ogImage === "string"
+    ? ogImage
+    : ogImage && typeof ogImage === "object" && "src" in ogImage
+      ? String((ogImage as { src: string }).src)
+      : undefined;
+const imageUrl = resolvedOg
+  ? resolvedOg.startsWith("http")
+    ? resolvedOg
+    : absoluteUrl(resolvedOg)
+  : absoluteUrl("/favicon.svg");
+const schemas = jsonLd
+  ? Array.isArray(jsonLd)
+    ? jsonLd
+    : [jsonLd]
+  : [];
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={canonical} />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    {noIndex && <meta name="robots" content="noindex, nofollow" />}
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={SITE_NAME} />
+    <meta property="og:locale" content="es_MX" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={imageUrl} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={imageUrl} />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap"
+      rel="stylesheet"
+    />
+
+    {
+      schemas.map((schema) => (
+        <script
+          type="application/ld+json"
+          set:html={JSON.stringify(schema)}
+        />
+      ))
+    }
+  </head>
+  <body>
+    <Header client:load pathname={pathname} />
+    <main>
+      <slot />
+    </main>
+    <Footer />
+    <WhatsAppFab client:load />
+  </body>
+</html>

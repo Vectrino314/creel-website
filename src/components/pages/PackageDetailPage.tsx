@@ -1,18 +1,15 @@
 import { useState } from "react";
-import { Link, Navigate, useParams } from "react-router-dom";
-import { Breadcrumbs } from "../components/Breadcrumbs";
-import { FadeIn } from "../components/FadeIn";
-import { CONTACT, getPackageBySlug } from "../data";
+import { Breadcrumbs } from "../Breadcrumbs";
+import { FadeIn } from "../FadeIn";
+import { CONTACT, type Package } from "../../data";
 import "./PackageDetailPage.css";
 
-export function PackageDetailPage() {
-  const { slug = "" } = useParams();
-  const pkg = getPackageBySlug(slug);
-  const [imageIndex, setImageIndex] = useState(0);
+type PackageDetailPageProps = {
+  pkg: Package;
+};
 
-  if (!pkg) {
-    return <Navigate to="/paquetes" replace />;
-  }
+export function PackageDetailPage({ pkg }: PackageDetailPageProps) {
+  const [imageIndex, setImageIndex] = useState(0);
 
   const whatsappHref = `https://wa.me/${CONTACT.whatsapp}?text=${encodeURIComponent(
     `Hola, me interesa el paquete ${pkg.name}.`,
@@ -45,6 +42,7 @@ export function PackageDetailPage() {
             <p key={paragraph.slice(0, 48)}>{paragraph}</p>
           ))}
 
+          <h2 className="package-detail__highlights-title">Incluye</h2>
           <ul className="package-detail__highlights">
             {pkg.highlights.map((item) => (
               <li key={item}>{item}</li>
@@ -52,9 +50,9 @@ export function PackageDetailPage() {
           </ul>
 
           <div className="package-detail__actions">
-            <Link className="package-detail__primary" to="/#contacto">
+            <a className="package-detail__primary" href="/#contacto">
               Planifica tu viaje
-            </Link>
+            </a>
             <a
               className="package-detail__secondary"
               href={whatsappHref}
@@ -63,9 +61,9 @@ export function PackageDetailPage() {
             >
               WhatsApp
             </a>
-            <Link className="package-detail__ghost" to="/paquetes">
+            <a className="package-detail__ghost" href="/paquetes">
               ← Todos los paquetes
-            </Link>
+            </a>
           </div>
         </FadeIn>
 

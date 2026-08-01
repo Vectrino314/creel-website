@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import { FadeIn } from "./FadeIn";
 import { EXPERIENCES } from "../data";
 import "./Experiences.css";
@@ -30,9 +29,9 @@ export function Experiences() {
               <span className="eyebrow">{item.eyebrow}</span>
               <h3>{item.title}</h3>
               <p>{item.description}</p>
-              <Link to="/paquetes" className="text-link">
+              <a href="/paquetes" className="text-link">
                 Ver paquetes relacionados
-              </Link>
+              </a>
             </FadeIn>
           </article>
         ))}

@@ -1,0 +1,22 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { DestinationsPage } from "../../components/pages/DestinationsPage";
+import { breadcrumbJsonLd } from "../../lib/seo";
+
+const title = "Destinos en Barrancas del Cobre y Chihuahua";
+const description =
+  "Explora Divisadero, Creel, Chihuahua Capital, Cuauhtémoc y El Fuerte. Destinos de naturaleza, cultura y aventura con Incentitours.";
+const breadcrumbs = breadcrumbJsonLd([
+  { label: "Inicio", path: "/" },
+  { label: "Destinos", path: "/destinos" },
+]);
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  pathname="/destinos"
+  jsonLd={breadcrumbs}
+>
+  <DestinationsPage client:load />
+</BaseLayout>
