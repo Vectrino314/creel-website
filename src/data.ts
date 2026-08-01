@@ -9,6 +9,16 @@ import destChihuahua from "./assets/Mesa-de-trabajo-6-1.png";
 import destCuauhtemoc from "./assets/Mesa-de-trabajo-5cuau.png";
 import destElFuerte from "./assets/Mesa-de-trabajo-5cuau-1.png";
 import aboutImage from "./assets/DSC03794-Copiar-Copiar.jpg";
+import partnerKetzaltour from "./assets/partners/ketzaltour.png";
+import partnerCaliforniaNative from "./assets/partners/california-native.jpg";
+import partnerMexicoTravelFactory from "./assets/partners/mexico-travel-factory.png";
+import partnerNativeTrails from "./assets/partners/native-trails.png";
+import partnerCloserLook from "./assets/partners/closer-look.png";
+import certMpi from "./assets/certs/mpi.png";
+import certTripadvisor from "./assets/certs/tripadvisor.jpg";
+import certEmpresaIncluyente from "./assets/certs/empresa-incluyente.png";
+import certDistintivoM from "./assets/certs/distintivo-m.png";
+import certDistintivoH from "./assets/certs/distintivo-h.png";
 
 export const LOGO = logoIncentitours;
 
@@ -17,7 +27,7 @@ export const ABOUT_IMAGE = aboutImage;
 export const NAV_LINKS = [
   { label: "Experiencias", href: "/#experiencias" },
   { label: "Destinos", href: "/destinos" },
-  { label: "Paquetes", href: "/#paquetes" },
+  { label: "Paquetes", href: "/paquetes" },
   { label: "Servicios", href: "/#servicios" },
   { label: "Nosotros", href: "/#nosotros" },
   { label: "Contacto", href: "/#contacto" },
@@ -65,6 +75,11 @@ export const EXPERIENCES = [
   },
 ] as const;
 
+export type DestinationLink = {
+  label: string;
+  href: string;
+};
+
 export type Destination = {
   slug: string;
   name: string;
@@ -76,6 +91,7 @@ export type Destination = {
   highlights: string[];
   featured?: boolean;
   featuredTitle?: string;
+  additionalLinks?: DestinationLink[];
 };
 
 export const DESTINATIONS: Destination[] = [
@@ -100,6 +116,12 @@ export const DESTINATIONS: Destination[] = [
       "Vistas a los cañones Urique, Tararecua y del Cobre",
     ],
     featured: true,
+    additionalLinks: [
+      {
+        label: "Parque Barrancas",
+        href: "https://www.parquebarrancas.com/",
+      },
+    ],
   },
   {
     slug: "creel",
@@ -195,61 +217,240 @@ export function getGridDestinations(): Destination[] {
   return DESTINATIONS.filter((d) => !d.featured);
 }
 
-export const PACKAGES = [
+export type Package = {
+  slug: string;
+  name: string;
+  duration: string;
+  departures: string;
+  summary: string;
+  images: string[];
+  body: string[];
+  highlights: string[];
+};
+
+export const PACKAGES: Package[] = [
   {
+    slug: "barrancas-express",
     name: "Barrancas Express",
     duration: "3 días · 2 noches",
     departures: "Lunes y sábados",
     summary:
       "Inmersión rápida en la Sierra Tarahumara: vistas de la Barranca, Creel y adrenalina en el Parque Aventura.",
+    images: [heroBarrancas, destCreel, experienceBarrancas, heroChepe],
+    body: [
+      "Un viaje que te interna de forma muy rápida en el corazón de la Sierra Tarahumara de Chihuahua. Chofer a la puerta para que te enamores de la majestuosidad de las vistas de la Barranca del Cobre, la cultura de sus habitantes y la aventura del viaje en tren.",
+      "Tendrás oportunidad de vivir actividades de adrenalina en el Parque Aventura Barrancas del Cobre y conocer el Pueblo Mágico de Creel, antiguo pueblo maderero y principal estación del tren Chepe Express, con todo su ambiente rústico de la sierra.",
+    ],
+    highlights: [
+      "2 noches · 3 días",
+      "Salidas lunes y sábados",
+      "Vistas a la Barranca del Cobre",
+      "Pueblo Mágico de Creel",
+      "Parque Aventura Barrancas del Cobre",
+    ],
   },
   {
+    slug: "entre-dos-pueblos-magicos",
     name: "Entre dos Pueblos Mágicos",
     duration: "4 días · 3 noches",
     departures: "Domingos y viernes",
     summary:
       "Creel y El Fuerte unidos por el Chepe Express. Cañones, artesanía rarámuri y el sabor de Sinaloa.",
+    images: [destCreel, heroChepe, destElFuerte, heroBarrancas],
+    body: [
+      "Un viaje en tren para conocer las majestuosas vistas de las Barrancas del Cobre y sus dos Pueblos Mágicos. Creel, principal estación del Chepe Express, antiguo pueblo maderero y centro artesanal rarámuri, con pernocta en Barrancas del Cobre.",
+      "Desde ahí abordas el tren hasta el Pueblo Mágico de El Fuerte, Sinaloa: un bello pueblo colonial lleno de historia, casonas de fachadas de colores vivos de la época virreinal, fundado en 1564. Una experiencia cultural asombrosa, con oportunidad de degustar los mejores mariscos de la región.",
+    ],
+    highlights: [
+      "3 noches · 4 días",
+      "Salidas domingos y viernes",
+      "Creel y El Fuerte",
+      "Pernocta en Barrancas del Cobre",
+      "Chepe Express y gastronomía sinaloense",
+    ],
   },
   {
+    slug: "altura-y-aventura",
     name: "Altura y Aventura",
     duration: "5 días · 4 noches",
     departures: "Domingos, jueves y martes",
     summary:
       "De 90 a 2,300 m de altitud a bordo del Chepe. Biodiversidad, clima y cultura rarámuri en un solo viaje.",
+    images: [heroChepe, heroBarrancas, experienceBarrancas, heroCultura],
+    body: [
+      "Ven y viaja en el único tren de pasajeros en México, subiendo desde los 90 m sobre el nivel del mar hasta más de 2,300 m de altitud. Vives el cambio de clima y la biodiversidad de los paisajes: del clima tropical a los bosques de pinos, en el marco de la cultura ancestral de los rarámuri.",
+      "Majestuosas vistas a bordo del Chepe Express hasta internarte en el corazón de la Sierra Tarahumara, con tiempo para explorar y vivir la aventura de la región.",
+    ],
+    highlights: [
+      "4 noches · 5 días",
+      "Salidas domingos, jueves y martes",
+      "Ascenso de 90 a más de 2,300 m",
+      "Cambio de clima y biodiversidad",
+      "Chepe Express y Sierra Tarahumara",
+    ],
   },
   {
+    slug: "cultural",
     name: "Cultural",
     duration: "5 días · 4 noches",
     departures: "Jueves, sábado o lunes",
     summary:
       "Menonitas, Sierra Tarahumara, Parque Aventura y tren hasta El Fuerte. Cultura de principio a fin.",
+    images: [heroCultura, destChihuahua, destCuauhtemoc, heroChepe],
+    body: [
+      "Conoce las Barrancas del Cobre y sus maravillas iniciando en Chihuahua Capital, para acercarte a la cultura menonita con más de 100 años en la región. Continúa hacia la Sierra Tarahumara para conocer a su población, paisajes, comida y cultura.",
+      "Atrévete a vivir la adrenalina en el Parque Aventura Barrancas del Cobre y culmina el viaje a bordo del Chepe Express, pasando por túneles y puentes hasta El Fuerte, Pueblo Mágico pintoresco con un clima ideal para una tarde excepcional.",
+    ],
+    highlights: [
+      "4 noches · 5 días",
+      "Salidas jueves, sábado o lunes",
+      "Cultura menonita y rarámuri",
+      "Parque Aventura Barrancas del Cobre",
+      "Chepe Express hasta El Fuerte",
+    ],
   },
   {
+    slug: "espectacular",
     name: "Espectacular",
     duration: "6 días · 5 noches",
     departures: "Martes, jueves y sábados",
     summary:
       "La experiencia completa: tren, barrancas, exploración y espíritu de aventura en la Sierra.",
+    images: [experienceBarrancas, heroChepe, heroBarrancas, destCreel],
+    body: [
+      "Vive una aventura de altura en el único tren de pasajeros en México: desde los 90 m sobre el nivel del mar hasta más de 2,300 m de altitud, con el cambio de clima y biodiversidad de los paisajes — del tropical a los bosques de pinos — en el marco de la cultura rarámuri.",
+      "Majestuosas vistas a bordo del Chepe Express hasta el corazón de la Sierra Tarahumara. Explora la región y prueba tu espíritu de aventura en el Parque Aventura.",
+    ],
+    highlights: [
+      "5 noches · 6 días",
+      "Salidas martes, jueves y sábados",
+      "Recorrido completo en Chepe Express",
+      "Exploración en la Sierra Tarahumara",
+      "Parque Aventura Barrancas del Cobre",
+    ],
   },
   {
+    slug: "maravillosa",
     name: "Maravillosa",
     duration: "7 días · 6 noches",
     departures: "Martes, jueves y sábado",
     summary:
       "Ritmo pausado: Chihuahua, Creel, dos noches en barrancas, Chepe Express y El Fuerte.",
+    images: [destCreel, heroBarrancas, experienceChepe, destElFuerte],
+    body: [
+      "Un viaje para relajarse y adentrarse en la Sierra Tarahumara. Comienza en Chihuahua capital y continúa a Creel, con parada en el Museo Menonita para conocer su cultura y productos. En Creel explora los valles tarahumaras y sus maravillas naturales.",
+      "Disfruta de los mejores hoteles de la zona, descubre tu espíritu aventurero en el Parque Aventura y pasa dos noches en las barrancas. Experimenta el Chepe Express — único tren de pasajeros en México — y cambia de clima en un solo día al llegar a El Fuerte, Pueblo Mágico de clima semitropical.",
+    ],
+    highlights: [
+      "6 noches · 7 días",
+      "Salidas martes, jueves y sábado",
+      "Chihuahua, Creel y dos noches en barrancas",
+      "Museo Menonita y Parque Aventura",
+      "Chepe Express y El Fuerte",
+    ],
+  },
+];
+
+export function getPackageBySlug(slug: string): Package | undefined {
+  return PACKAGES.find((p) => p.slug === slug);
+}
+
+export const SERVICES = [
+  {
+    title: "Chepe Express",
+    detail: "Reservaciones y compra de boletos en el tren más espectacular de México.",
+  },
+  {
+    title: "Tours",
+    detail: "Recorridos culturales y de naturaleza por la Sierra Tarahumara y sus alrededores.",
+  },
+  {
+    title: "Experiencias gastronómicas",
+    detail: "Sabores de la sierra, cocina regional y encuentros en torno a la mesa.",
+  },
+  {
+    title: "Viajes de incentivo",
+    detail: "Programas a la medida para empresas que buscan motivar y recompensar.",
+  },
+  {
+    title: "Guías certificados",
+    detail: "Atención especializada a turismo nacional y extranjero.",
+  },
+  {
+    title: "Experiencias culturales",
+    detail: "Encuentros con las culturas rarámuri, menonita y mestiza.",
+  },
+  {
+    title: "Congresos y convenciones",
+    detail: "Planeación integral de reuniones, incentivos y convenciones.",
+  },
+  {
+    title: "Logística para eventos",
+    detail: "Coordinación de punta a punta para que tu evento fluya sin fricciones.",
+  },
+  {
+    title: "Renta de autobuses y vans",
+    detail: "Flota para grupos, traslados regionales y operación de circuitos.",
+  },
+  {
+    title: "Traslados",
+    detail: "Aeropuerto, hotel y estación — puntualidad y comodidad en cada tramo.",
   },
 ] as const;
 
-export const SERVICES = [
-  { title: "Chepe Express", detail: "Reservaciones y boletos" },
-  { title: "Tours", detail: "Culturales y de naturaleza" },
-  { title: "Guías certificados", detail: "Atención al turismo extranjero" },
-  { title: "Viajes de incentivo", detail: "Diseño a la medida" },
-  { title: "Traslados", detail: "Aeropuerto, hotel y estación" },
-  { title: "Renta de vans y autobuses", detail: "Logística de grupo" },
-  { title: "Congresos y eventos", detail: "Planeación completa" },
-  { title: "Hotel propio", detail: "The Lodge at Creel Hotel & Spa" },
-] as const;
+export const HOTEL = {
+  title: "The Lodge at Creel Hotel & Spa",
+  detail:
+    "Nuestro hotel propio en el corazón de Creel: base ideal para explorar las Barrancas del Cobre.",
+  href: "https://thelodgeatcreel.com/",
+} as const;
+
+export type Partner = {
+  name: string;
+  logo: string;
+};
+
+export const PARTNERS: Partner[] = [
+  { name: "Ketzaltour", logo: partnerKetzaltour },
+  { name: "California Native", logo: partnerCaliforniaNative },
+  { name: "Mexico Travel Factory", logo: partnerMexicoTravelFactory },
+  { name: "Native Trails", logo: partnerNativeTrails },
+  { name: "A Closer Look Tours", logo: partnerCloserLook },
+];
+
+export type Certification = {
+  name: string;
+  logo: string;
+  blurb: string;
+};
+
+export const CERTIFICATIONS: Certification[] = [
+  {
+    name: "MPI",
+    logo: certMpi,
+    blurb: "Meeting Professionals International",
+  },
+  {
+    name: "Tripadvisor",
+    logo: certTripadvisor,
+    blurb: "Reconocidos por viajeros de todo el mundo",
+  },
+  {
+    name: "Empresa Incluyente",
+    logo: certEmpresaIncluyente,
+    blurb: "Compromiso con la inclusión laboral",
+  },
+  {
+    name: "Distintivo M",
+    logo: certDistintivoM,
+    blurb: "Calidad en el servicio turístico",
+  },
+  {
+    name: "Distintivo H",
+    logo: certDistintivoH,
+    blurb: "Higiene y manejo de alimentos",
+  },
+];
 
 export const TESTIMONIALS = [
   {

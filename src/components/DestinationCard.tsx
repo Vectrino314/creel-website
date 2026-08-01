@@ -6,25 +6,25 @@ import "./DestinationCard.css";
 type DestinationCardProps = {
   destination: Destination;
   variant?: "featured" | "grid";
-  autoPlay?: boolean;
 };
 
 export function DestinationCard({
   destination,
   variant = "grid",
-  autoPlay = true,
 }: DestinationCardProps) {
   const images = destination.images;
+  const additionalLinks = destination.additionalLinks ?? [];
   const [index, setIndex] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
   const touchStartX = useRef<number | null>(null);
 
   useEffect(() => {
-    if (!autoPlay || images.length <= 1) return;
+    if (!isHovered || images.length <= 1) return;
     const id = window.setInterval(() => {
       setIndex((i) => (i + 1) % images.length);
     }, 5000);
     return () => window.clearInterval(id);
-  }, [autoPlay, images.length]);
+  }, [isHovered, images.length]);
 
   const goTo = (next: number) => {
     setIndex(((next % images.length) + images.length) % images.length);
@@ -65,6 +65,14 @@ export function DestinationCard({
       className={`dest-card dest-card--${variant}`}
       onKeyDown={onKeyDown}
       tabIndex={0}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      onFocus={() => setIsHovered(true)}
+      onBlur={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
+          setIsHovered(false);
+        }
+      }}
     >
       <div
         className="dest-card__media"
@@ -121,12 +129,25 @@ export function DestinationCard({
           </div>
         )}
 
-        <Link
-          className="dest-card__cta"
-          to={`/destinos/${destination.slug}`}
-        >
-          Ver destino
-        </Link>
+        <div className="dest-card__ctas">
+          <Link
+            className="dest-card__cta"
+            to={`/destinos/${destination.slug}`}
+          >
+            Ver destino
+          </Link>
+          {additionalLinks.map((link) => (
+            <a
+              key={link.href}
+              className="dest-card__cta dest-card__cta--external"
+              href={link.href}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {link.label}
+            </a>
+          ))}
+        </div>
       </div>
 
       <div className="dest-card__body">

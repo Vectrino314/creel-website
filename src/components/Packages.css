@@ -74,6 +74,36 @@
   padding-bottom: 2px;
 }
 
+.package__cta:hover {
+  color: #fff;
+}
+
+.packages__cta-wrap {
+  margin-top: clamp(2rem, 4vw, 3rem);
+  text-align: center;
+}
+
+.packages__all {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.85rem;
+  padding: 0.75rem 1.4rem;
+  background: var(--gold);
+  color: var(--pine-deep);
+  font-weight: 600;
+  font-size: 0.95rem;
+  border-radius: var(--radius);
+  transition:
+    background 0.2s var(--ease-out),
+    transform 0.2s var(--ease-out);
+}
+
+.packages__all:hover {
+  background: #d4b03a;
+  transform: translateY(-1px);
+}
+
 @media (min-width: 800px) {
   .packages__list {
     grid-template-columns: 1fr 1fr;

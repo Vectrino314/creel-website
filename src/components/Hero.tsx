@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { HERO_SLIDES } from "../data";
 import "./Hero.css";
 
@@ -39,9 +40,9 @@ export function Hero() {
           {slide.subtitle}
         </p>
         <div className="hero__actions">
-          <a className="btn btn-primary" href="#paquetes">
+          <Link className="btn btn-primary" to="/paquetes">
             Ver paquetes
-          </a>
+          </Link>
           <a className="btn btn-ghost" href="#experiencias">
             Descubrir experiencias
           </a>

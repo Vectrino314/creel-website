@@ -6,6 +6,8 @@ import { ScrollToTop } from "./components/ScrollToTop";
 import { HomePage } from "./pages/HomePage";
 import { DestinationsPage } from "./pages/DestinationsPage";
 import { DestinationDetailPage } from "./pages/DestinationDetailPage";
+import { PackagesPage } from "./pages/PackagesPage";
+import { PackageDetailPage } from "./pages/PackageDetailPage";
 
 function AppLayout() {
   return (
@@ -17,6 +19,8 @@ function AppLayout() {
           <Route path="/" element={<HomePage />} />
           <Route path="/destinos" element={<DestinationsPage />} />
           <Route path="/destinos/:slug" element={<DestinationDetailPage />} />
+          <Route path="/paquetes" element={<PackagesPage />} />
+          <Route path="/paquetes/:slug" element={<PackageDetailPage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </main>

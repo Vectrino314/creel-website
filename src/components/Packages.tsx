@@ -1,12 +1,9 @@
+import { Link } from "react-router-dom";
 import { FadeIn } from "./FadeIn";
-import { CONTACT, PACKAGES } from "../data";
+import { PACKAGES } from "../data";
 import "./Packages.css";
 
 export function Packages() {
-  const wa = `https://wa.me/${CONTACT.whatsapp}?text=${encodeURIComponent(
-    "Hola Incentitours, me interesa información sobre un paquete a Barrancas del Cobre.",
-  )}`;
-
   return (
     <section id="paquetes" className="packages">
       <div className="container packages__intro">
@@ -23,7 +20,7 @@ export function Packages() {
       <div className="packages__list container">
         {PACKAGES.map((pkg, i) => (
           <FadeIn
-            key={pkg.name}
+            key={pkg.slug}
             as="article"
             className="package"
             delay={(i % 3) as 0 | 1 | 2}
@@ -34,11 +31,19 @@ export function Packages() {
             </div>
             <h3>{pkg.name}</h3>
             <p>{pkg.summary}</p>
-            <a className="package__cta" href={wa} target="_blank" rel="noreferrer">
-              Consultar por WhatsApp
-            </a>
+            <Link className="package__cta" to={`/paquetes/${pkg.slug}`}>
+              Ver itinerario
+            </Link>
           </FadeIn>
         ))}
+      </div>
+
+      <div className="container packages__cta-wrap">
+        <FadeIn>
+          <Link className="packages__all" to="/paquetes">
+            Ver todos los paquetes
+          </Link>
+        </FadeIn>
       </div>
     </section>
   );

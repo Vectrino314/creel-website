@@ -96,6 +96,20 @@ export function DestinationDetailPage() {
               ))}
             </div>
           )}
+          {destination.additionalLinks && destination.additionalLinks.length > 0 && (
+            <div className="destination-detail__extra-links">
+              {destination.additionalLinks.map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {link.label}
+                </a>
+              ))}
+            </div>
+          )}
         </FadeIn>
       </div>
     </article>

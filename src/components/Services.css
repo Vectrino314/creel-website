@@ -1,5 +1,5 @@
 .services {
-  padding: clamp(4.5rem, 10vw, 7rem) 0;
+  padding: clamp(4.5rem, 10vw, 7rem) 0 0;
   background: var(--paper);
 }
 
@@ -17,10 +17,26 @@
 }
 
 .service-item {
-  padding: 1.35rem 0;
+  padding: 1.4rem 0;
   border-bottom: 1px solid var(--line);
   display: grid;
-  gap: 0.25rem;
+  grid-template-columns: auto 1fr;
+  gap: 1rem 1.25rem;
+  align-items: start;
+  transition: background 0.35s var(--ease-out);
+}
+
+.service-item__index {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  color: var(--copper);
+  letter-spacing: 0.06em;
+  padding-top: 0.35rem;
+}
+
+.service-item__body {
+  display: grid;
+  gap: 0.3rem;
 }
 
 .service-item h3 {
@@ -30,11 +46,78 @@
 .service-item p {
   color: var(--ink-soft);
   font-size: 0.95rem;
+  max-width: 34rem;
+}
+
+.services__hotel {
+  margin-top: clamp(3rem, 7vw, 4.5rem);
+  background:
+    linear-gradient(135deg, rgba(18, 40, 32, 0.94), rgba(28, 61, 50, 0.88)),
+    var(--pine-deep);
+  color: #f4f1ea;
+  padding: clamp(2.5rem, 6vw, 3.75rem) 0;
+}
+
+.services__hotel-inner {
+  display: grid;
+  gap: 1.75rem;
+  align-items: end;
+}
+
+.services__hotel-eyebrow {
+  color: var(--gold);
+}
+
+.services__hotel-copy h3 {
+  font-size: clamp(1.65rem, 3.2vw, 2.35rem);
+  color: #f7f4ee;
+}
+
+.services__hotel-copy p {
+  margin-top: 0.85rem;
+  max-width: 36rem;
+  color: rgba(244, 241, 234, 0.78);
+  font-size: 1.02rem;
+}
+
+.services__hotel-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  font-weight: 600;
+  font-size: 0.92rem;
+  letter-spacing: 0.04em;
+  color: var(--pine-deep);
+  background: var(--gold);
+  padding: 0.85rem 1.4rem;
+  border-bottom: none;
+  transition:
+    transform 0.35s var(--ease-out),
+    background 0.25s ease;
+}
+
+.services__hotel-cta:hover {
+  background: #d9b63a;
+  transform: translateY(-2px);
+  color: var(--pine-deep);
 }
 
 @media (min-width: 800px) {
   .services__grid {
     grid-template-columns: 1fr 1fr;
     column-gap: 3rem;
+  }
+
+  .services__hotel-inner {
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    gap: 3rem;
+  }
+}
+
+@media (hover: hover) and (min-width: 800px) {
+  .service-item:hover h3 {
+    color: var(--pine);
   }
 }

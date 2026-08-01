@@ -1,5 +1,5 @@
 import { FadeIn } from "./FadeIn";
-import { SERVICES } from "../data";
+import { HOTEL, SERVICES } from "../data";
 import "./Services.css";
 
 export function Services() {
@@ -10,7 +10,8 @@ export function Services() {
           <span className="eyebrow">Servicios</span>
           <h2 className="section-title">Todo lo que necesitas en ruta</h2>
           <p className="section-lead">
-            Operación propia, certificaciones y aliados para que solo te
+            Del boleto del Chepe a la logística de un congreso: operación
+            propia, guías certificados y un hotel en Creel para que solo te
             preocupes por disfrutar.
           </p>
         </FadeIn>
@@ -23,12 +24,35 @@ export function Services() {
               className="service-item"
               delay={(i % 3) as 0 | 1 | 2}
             >
-              <h3>{service.title}</h3>
-              <p>{service.detail}</p>
+              <span className="service-item__index" aria-hidden="true">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <div className="service-item__body">
+                <h3>{service.title}</h3>
+                <p>{service.detail}</p>
+              </div>
             </FadeIn>
           ))}
         </ul>
       </div>
+
+      <FadeIn className="services__hotel">
+        <div className="container services__hotel-inner">
+          <div className="services__hotel-copy">
+            <span className="eyebrow services__hotel-eyebrow">Hotel propio</span>
+            <h3>{HOTEL.title}</h3>
+            <p>{HOTEL.detail}</p>
+          </div>
+          <a
+            className="services__hotel-cta"
+            href={HOTEL.href}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Visitar el Lodge
+          </a>
+        </div>
+      </FadeIn>
     </section>
   );
 }
